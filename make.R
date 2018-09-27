@@ -22,13 +22,10 @@ pkgconfig::set_config("drake::strings_in_dots" = "literals") # New file API
 ## check supporting files
 ## -------------------------
 
-file.exists(here::here("data", "raw_data.xlsx"))
+file.exists(here("data", "raw_data.xlsx"))
 ## [1] TRUE
-file.exists(here::here("report", "report.Rmd"))
+file.exists(here("report", "report.Rmd"))
 ## [1] TRUE
-
-system(glue::glue("cp report/report.Rmd report.Rmd"))
-system(glue::glue("cp data/raw_data.xlsx raw_data.xlsx"))
 
 # Your custom code is a bunch of functions.
 ## -------------------------
@@ -39,15 +36,15 @@ source(here("R", "functions.R"))
 ## -------------------------
 
 plan <- drake_plan(
-  raw_data = readxl::read_excel(file_in("raw_data.xlsx")),
+  raw_data = readxl::read_excel(file_in(here("data", "raw_data.xlsx"))),
   data = raw_data %>%
     mutate(Species = forcats::fct_inorder(Species)) %>%
     select(-X__1),
   hist = create_plot(data),
   fit = lm(Sepal.Width ~ Petal.Width + Species, data),
   report = rmarkdown::render(
-    knitr_in("report.Rmd"),
-    output_file = file_out("report.html"),
+    knitr_in(here("report", "report.Rmd")),
+    output_file = file_out(here("report", "report.html")),
     quiet = FALSE
   )
 )
@@ -56,20 +53,24 @@ plan <- drake_plan(
 ## -------------------------
 
 config <- drake_config(plan)
+# Warning message: knitr/rmarkdown report 'report.Rmd' does not exist and cannot be inspected for dependencies. 
+
 vis_drake_graph(config)
+# Error: The specified pathname is not a file: data
 
 ## Run your work with make().
 ## -------------------------
 
 make(plan)
+#Error: The specified pathname is not a file: data
+#In addition: Warning messages:
+ # 1: knitr/rmarkdown report 'report.Rmd' does not exist and cannot be inspected for dependencies. 
+#2: missing input files:
+#  raw_data.xlsx
+#report.Rmd 
 
 ## Now check again
 ## -------------------------
 config <- drake_config(plan)
 vis_drake_graph(config)
-
-## remove files again
-## --------------------
-system(glue::glue("rm report.Rmd"))
-system(glue::glue("rm raw_data.xlsx"))
 

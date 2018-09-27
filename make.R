@@ -6,7 +6,7 @@
 ## look at the folder structure:
 cat(
   system(
-    "tree ../test_drake",
+    "tree ../drake-example",
     intern = TRUE),
   sep = "\n"
 )
@@ -26,10 +26,9 @@ file.exists(here::here("data", "raw_data.xlsx"))
 ## [1] TRUE
 file.exists(here::here("report", "report.Rmd"))
 ## [1] TRUE
-#fs::link_create(here::here("report", "report.Rmd"), "report.Rmd")
 
-fs::link_create(here::here("data", "raw_data.xlsx"), "raw_data.xlsx")
 system(glue::glue("cp report/report.Rmd report.Rmd"))
+system(glue::glue("cp data/raw_data.xlsx raw_data.xlsx"))
 
 # Your custom code is a bunch of functions.
 ## -------------------------

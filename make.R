@@ -26,27 +26,29 @@ file.exists(here::here("data", "raw_data.xlsx"))
 ## [1] TRUE
 file.exists(here::here("report", "report.Rmd"))
 ## [1] TRUE
-##file.link("report/report.Rmd")
-##fs::link_create(here::here("data", "raw_data.xlsx"), "raw_data.xlsx")
+#fs::link_create(here::here("report", "report.Rmd"), "report.Rmd")
+
+fs::link_create(here::here("data", "raw_data.xlsx"), "raw_data.xlsx")
+system(glue::glue("cp report/report.Rmd report.Rmd"))
 
 # Your custom code is a bunch of functions.
 ## -------------------------
 
-source(here::here("R", "functions.R"))
+source(here("R", "functions.R"))
 
 # The workflow plan data frame outlines what you are going to do.
 ## -------------------------
 
 plan <- drake_plan(
-  raw_data = readxl::read_excel(file_in(here("data", "raw_data.xlsx"))),
+  raw_data = readxl::read_excel(file_in("raw_data.xlsx")),
   data = raw_data %>%
     mutate(Species = forcats::fct_inorder(Species)) %>%
     select(-X__1),
   hist = create_plot(data),
   fit = lm(Sepal.Width ~ Petal.Width + Species, data),
   report = rmarkdown::render(
-    knitr_in(here::here("report", "report.Rmd")),
-    output_file = file_out(here::here("report", "report.html")),
+    knitr_in("report.Rmd"),
+    output_file = file_out("report.html"),
     quiet = FALSE
   )
 )

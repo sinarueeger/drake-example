@@ -1,7 +1,6 @@
-# Walkthrough: https://ropenscilabs.github.io/drake-manual/intro.html
-# Slides: https://krlmlr.github.io/drake-pitch
-# Code: drake_example("main") # nolint
-## https://krlmlr.github.io/slides/drake-sib-zurich/#28
+## Drake example that uses a simple folder structure 
+## and copies files in folder to "root" 
+## ------------
 
 ## look at the folder structure:
 cat(

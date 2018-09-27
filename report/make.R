@@ -20,19 +20,19 @@ pkgconfig::set_config("drake::strings_in_dots" = "literals") # New file API
 
 ## check supporting files
 ## -------------------------
+fs::link_create(here("..", "data", "raw_data.xlsx"), "raw_data.xlsx")
 
-system("cp report/report.Rmd report.Rmd")
-system("cp data/raw_data.xlsx raw_data.xlsx")
+file.exists(here("..", "R", "functions.R"))
 
-file.exists(here("data", "raw_data.xlsx"))
+file.exists("raw_data.xlsx")
 ## [1] TRUE
-file.exists(here("report", "report.Rmd"))
+file.exists("report.Rmd")
 ## [1] TRUE
 
 # Your custom code is a bunch of functions.
 ## -------------------------
 
-source(here("R", "functions.R"))
+source(here("..", "R", "functions.R"))
 
 # The workflow plan data frame outlines what you are going to do.
 ## -------------------------
@@ -55,6 +55,7 @@ plan <- drake_plan(
 ## -------------------------
 
 config <- drake_config(plan)
+
 vis_drake_graph(config)
 
 ## Run your work with make().
@@ -67,8 +68,7 @@ make(plan)
 config <- drake_config(plan)
 vis_drake_graph(config)
 
-## remove files again
-## --------------------
-system("rm report.Rmd")
-system("rm raw_data.xlsx")
 
+## unlink files again
+## ----------------------
+fs::link_delete("raw_data.xlsx")

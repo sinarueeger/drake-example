@@ -68,5 +68,8 @@ make(plan)
 config <- drake_config(plan)
 vis_drake_graph(config)
 
-
+## remove files again
+## --------------------
+system(glue::glue("rm report.Rmd"))
+system(glue::glue("rm raw_data.xlsx"))
 

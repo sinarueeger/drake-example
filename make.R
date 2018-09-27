@@ -22,8 +22,8 @@ pkgconfig::set_config("drake::strings_in_dots" = "literals") # New file API
 ## check supporting files
 ## -------------------------
 
-fs::link_create(here::here("report", "report.Rmd"), "report.Rmd")
-fs::link_create(here::here("data", "raw_data.xlsx"), "raw_data.xlsx")
+fs::link_create(here("report", "report.Rmd"), "report.Rmd")
+fs::link_create(here("data", "raw_data.xlsx"), "raw_data.xlsx")
 
 file.exists("raw_data.xlsx")
 ## [1] TRUE

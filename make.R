@@ -22,13 +22,13 @@ pkgconfig::set_config("drake::strings_in_dots" = "literals") # New file API
 ## check supporting files
 ## -------------------------
 
-file.exists(here::here("data", "raw_data.xlsx"))
-## [1] TRUE
-file.exists(here::here("report", "report.Rmd"))
-## [1] TRUE
+system("cp report/report.Rmd report.Rmd")
+system("cp data/raw_data.xlsx raw_data.xlsx")
 
-system(glue::glue("cp report/report.Rmd report.Rmd"))
-system(glue::glue("cp data/raw_data.xlsx raw_data.xlsx"))
+file.exists(here("data", "raw_data.xlsx"))
+## [1] TRUE
+file.exists(here("report", "report.Rmd"))
+## [1] TRUE
 
 # Your custom code is a bunch of functions.
 ## -------------------------
@@ -70,6 +70,6 @@ vis_drake_graph(config)
 
 ## remove files again
 ## --------------------
-system(glue::glue("rm report.Rmd"))
-system(glue::glue("rm raw_data.xlsx"))
+system("rm report.Rmd")
+system("rm raw_data.xlsx")
 

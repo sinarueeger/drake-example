@@ -62,12 +62,15 @@ vis_drake_graph(config)
 ## -------------------------
 
 make(plan)
-#Error: The specified pathname is not a file: data
+#fail report
+#Error: Target `report` failed. Call `diagnose(report)` for details. Error message:
+#  object 'fit' not found
 #In addition: Warning messages:
- # 1: knitr/rmarkdown report 'report.Rmd' does not exist and cannot be inspected for dependencies. 
-#2: missing input files:
+#  1: missing input files:
 #  raw_data.xlsx
 #report.Rmd 
+#2: Missing files for target report:
+#  "report.html" 
 
 ## Now check again
 ## -------------------------

@@ -22,13 +22,15 @@ pkgconfig::set_config("drake::strings_in_dots" = "literals") # New file API
 ## check supporting files
 ## -------------------------
 
-file.exists(here::here("data", "raw_data.xlsx"))
+fs::link_create(here::here("report", "report.Rmd"), "report.Rmd")
+fs::link_create(here::here("data", "raw_data.xlsx"), "raw_data.xlsx")
+
+file.exists("raw_data.xlsx")
 ## [1] TRUE
-file.exists(here::here("report", "report.Rmd"))
+file.exists("report.Rmd")
 ## [1] TRUE
 
-system(glue::glue("cp report/report.Rmd report.Rmd"))
-system(glue::glue("cp data/raw_data.xlsx raw_data.xlsx"))
+
 
 # Your custom code is a bunch of functions.
 ## -------------------------
@@ -62,11 +64,17 @@ vis_drake_graph(config)
 ## -------------------------
 
 make(plan)
+# 
+#Warning message:
+#  Missing files for target report:
+#  "report.html" 
 
 ## Now check again
 ## -------------------------
 config <- drake_config(plan)
 vis_drake_graph(config)
 
-
-
+## unlink files again
+## ----------------------
+fs::link_delete("report.Rmd")
+fs::link_delete("raw_data.xlsx")
